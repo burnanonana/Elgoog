@@ -1,0 +1,264 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f8f9fa; /* Google과 유사한 배경색 */
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* 모바일 컨테이너를 벗어나는 스크롤 방지 */
+}
+
+/* 16:9 세로 비율 고정 컨테이너 */
+.mobile-container {
+    width: 360px; /* 예시 너비 */
+    height: 640px; /* 360 * (16/9)에 가까운 높이 */
+    border: 1px solid #dadce0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* --- 검색 화면 (초기) 스타일 --- */
+#search-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100;
+    padding-top: 20px;
+}
+
+.header {
+    margin-bottom: 50px;
+}
+
+/* Elgoog 로고 스타일 */
+.logo {
+    font-size: 50px;
+    font-weight: bold;
+    color: #4285f4; /* Google Blue */
+    position: relative;
+}
+
+.logo .eye-o {
+    color: #ea4335; /* Google Red */
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    line-height: 0.8; /* 'o'의 높이를 줄여서 눈처럼 보이게 */
+}
+
+/* 'o' 안에 눈동자 스타일 */
+.eye-o::before {
+    content: '';
+    display: block;
+    width: 8px; /* 눈동자 크기 */
+    height: 8px;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease-out; /* JS에서 움직임을 부드럽게 */
+}
+
+/* 동물 우리 (검색 바 대체) 스타일 */
+.enclosure-box {
+    width: 300px;
+    height: 150px;
+    border: 5px solid #734d26; /* 울타리 색 */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9e9;
+    text-align: center;
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 20px;
+    /* 드래그 오버 시 시각적 피드백 */
+    transition: border-color 0.2s;
+    position: relative;
+}
+
+.enclosure-box.drag-over {
+    border-color: #34a853; /* Google Green */
+    background-color: #e6f4ea;
+}
+
+/* 플로팅 동물 컨테이너 */
+#floating-animals-container {
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    padding: 10px;
+    z-index: 5;
+}
+
+.floating-animal {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.3s ease-out;
+}
+
+.floating-animal img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* --- 검색 결과 화면 스타일 --- */
+#result-screen {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.result-header {
+    padding-bottom: 10px;
+}
+
+.small-logo {
+    font-size: 30px;
+}
+
+.separator {
+    width: 90%;
+    height: 4px;
+    background-color: #734d26; /* 울타리 단순화 색상 */
+    border: none;
+    margin: 10px -20px 20px 5px;
+    border-radius: 2px;
+}
+
+/* 검색 결과 상세 정보 */
+.details-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 5px;
+}
+
+/* 4. 이미지 컨테이너 역할을 할 새로운 스타일 추가 */
+.animal-image-container {
+    width: 95%; /* [추가] 너비를 꽉 채우되 약간의 여백 확보 */
+    height: 250px; /* [추가] 이미지 영역의 높이를 지정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; 
+}
+
+.animal-image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 40px;
+    border: 1px solid #dadce0;
+    margin-bottom: 20px;
+}
+
+.text-info {
+    flex-grow: 1;
+}
+
+.korean-name {
+    margin: 0 0 5px 10px;
+    font-size: 22px;
+    color: #202124;
+}
+
+.english-name {
+    margin: 0 0 10px 10px;
+    font-size: 16px;
+    color: #5f6368;
+    font-style: italic;
+}
+
+.description {
+    margin: 0 0 0 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #3c4043;
+    width: 85%;
+}
+
+.eye-o::before {
+    content: '';
+    display: block;
+    width: 8px; /* 눈동자 크기 */
+    height: 8px;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* !!! 이 부분을 추가/수정해야 JS와 연동됩니다 !!! */
+    transform: translate(calc(-50% + var(--eye-x, 0px)), calc(-50% + var(--eye-y, 0px)));
+    /* !!! ------------------------------------ !!! */
+    transition: all 0.5s ease-out; 
+}
+
+/* --- 플로팅 동물 애니메이션 --- */
+@keyframes float {
+    0% { transform: translate(0, 0px) rotate(0deg); }
+    50% { transform: translate(10px, -10px) rotate(1deg); } /* 약간의 움직임과 회전 */
+    100% { transform: translate(0, 0px) rotate(0deg); }
+}
+
+.floating-animal {
+    /* 기존 스타일 유지 */
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    cursor: grab;
+    user-select: none;
+    /* transition: transform 0.3s ease-out; <- 이 줄은 제거하거나 덮어씁니다 */
+
+    /* 애니메이션 적용 */
+    animation-name: float;
+    animation-duration: 4s; /* 애니메이션 시간 */
+    animation-iteration-count: infinite; /* 무한 반복 */
+    animation-timing-function: ease-in-out; /* 부드러운 시작/끝 */
+}
+
+/* [추가] 돋보기 아이콘 스타일 */
+.search-icon {
+    position: absolute;
+    /* 우측 하단에 배치 */
+    right: 15px; 
+    bottom: 10px;
+    
+    font-size: 24px; /* 아이콘 크기 */
+    color: #4285f4; /* Google Blue 색상 */
+    opacity: 0.8;
+    pointer-events: none; /* 아이콘 클릭이 아닌 드롭 존만 반응하도록 설정 */
+}
