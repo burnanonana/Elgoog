@@ -73,6 +73,14 @@ body {
     overflow: hidden;/* 'o'의 높이를 줄여서 눈처럼 보이게 */
 }
 
+.logo .l {
+    color: #39c531; /* Google Red */
+    display: inline-block;
+    position: relative;
+    top:9px
+    overflow: hidden;/* 'o'의 높이를 줄여서 눈처럼 보이게 */
+}
+
 /* 'o' 안에 눈동자 스타일 */
 .eye-o::before {
     content: '';
